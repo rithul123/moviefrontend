@@ -44,6 +44,7 @@ const StyledInputBase = styled('input')({
   padding: '8px 12px',
   border: 'none',
   borderRadius: '4px',
+  background:'size: contain',
   background: 'rgba(255, 255, 255, 0.15)',
   transition: 'background 0.3s',
   '&:hover': {
@@ -73,11 +74,12 @@ const divStyle = {
   alignItems: 'center',
   justifyContent: 'center',
   height: '750px',
+
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   color: 'white',
-  fontFamily: 'Georgia, serif', 
+  fontfamily: 'Comic Sans MS', 
 };
 
 const spanStyle = {

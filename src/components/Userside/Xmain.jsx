@@ -1,14 +1,14 @@
 import axios from 'axios';
-import { CircularProgress, Container, Typography, AppBar, Box, Toolbar, IconButton, Menu, MenuItem ,CardContent,Card} from '@mui/material';
-import { Menu as MenuIcon, Search as SearchIcon  } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
-import { Buffer } from 'buffer';
+import { Box, CircularProgress, Container, Typography, AppBar, Toolbar, IconButton, Menu, MenuItem, Card, CardContent, Button } from '@mui/material';
+import { Menu as MenuIcon, Search as SearchIcon } from '@mui/icons-material';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { Button } from '@mui/material';
-import { useParams, Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Buffer } from 'buffer';
 import './Xmain.css';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -40,7 +40,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: '100%',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     [theme.breakpoints.up('sm')]: {
@@ -92,32 +91,16 @@ const Moviedetails = () => {
     setAnchorEl(null);
   };
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <CircularProgress />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography variant="h6" color="error">Error: {error.message}</Typography>
-      </div>
-    );
-  }
-
-  const handleImageClick = (movieId) => {
-    // Handle the click on the image button, maybe navigate to a different page
-    console.log(`Navigating to movie with ID: ${movieId}`);
+  const handleMovieClick = (movieId) => {
+    console.log('Clicked on movie with ID:', movieId);
+    // Handle the click event, e.g., redirect to movie details page
   };
 
   return (
     <Box style={{ backgroundImage: `url('https://wallpapercave.com/wp/nTwzv3B.jpg')`, backgroundSize: 'cover' }}>
       <AppBar position="static" sx={{ backgroundColor: 'black' }}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -125,22 +108,19 @@ const Moviedetails = () => {
             sx={{ mr: 2 }}
             onClick={handleClick}
           >
-            <MenuIcon />
-          </IconButton>
-          <Menu
+            / <MenuIcon />
+          </IconButton> */}
+          {/* <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem component={Link} to="/" onClick={handleClose}>Home</MenuItem> 
-            {/* <MenuItem component={Link} to="/login" onClick={handleClose}>Login</MenuItem>
-              <MenuItem component={Link} to="/Register1" onClick={handleClose}>Register</MenuItem> */}
-          </Menu>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            <MenuItem component={Link} to="/" onClick={handleClose}>Home</MenuItem>
+          </Menu> */}
+          <Typography         
+          variant="h6"
+             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            component={Link} className='sy' to="/" onClick={handleClose}
           >
             STREAMSAVY
           </Typography>
@@ -155,7 +135,7 @@ const Moviedetails = () => {
               onChange={handleSearchChange}
             />
           </Search>
-          <Button component={Link} to="/Sign" onClick={handleClose} style={{ color: 'inherit' }}>
+          <Button component={Link} to="/Sign" style={{ color: 'inherit' }}>
             <AccountCircleIcon />
             Login/Register
           </Button>
@@ -165,21 +145,23 @@ const Moviedetails = () => {
         <Typography variant="h3" align="center" gutterBottom style={{ margin: '20px 0', color: 'white' }}>WORLD OF ENTERTAINMENT</Typography>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
           {filteredMovies.map((movie, index) => (
-            <Button className='shrink-button' 
+            <Button
+              className='shrink-button'
               key={index}
-              onClick={() => handleImageClick(movie.id)} 
+              onClick={() => handleMovieClick(movie.id)}
               style={{ textDecoration: 'none', color: 'black' }}
             >
-              <Card style={{ margin: '20px', width: '300px' , backgroundColor: 'black' }}>
+              <Card style={{ margin: '20px', width: '300px', backgroundColor: 'black' }}>
                 <CardContent>
                   {movie.image1 && (
                     <img src={`data:image/jpeg;base64,${Buffer.from(movie.image1.data).toString('base64')}`} style={{ marginBottom: '20px', maxWidth: '100%' }} alt="Movie" />
                   )}
+                 
+                    
                   <Typography variant="subtitle1" gutterBottom style={{ color: 'white' }}><strong>{movie.MovieName}</strong></Typography>
                 </CardContent>
               </Card>
-              
-            </Button >
+            </Button>
           ))}
         </div>
       </Container>
@@ -188,3 +170,28 @@ const Moviedetails = () => {
 };
 
 export default Moviedetails;
+
+
+
+// const savedata=()=>{
+ 
+//   console.log(inputs)
+//  axios.post("http://localhost:3002/booking",inputs) 
+//  .then((response) => {
+//   alert("Booked Successfully");
+// })
+// .catch(err => console.error("Error", err));
+// };
+
+
+
+
+// useEffect(() => {
+// console.log("id:", id);
+// axios.get(`http://localhost:3002/book/${id}`)
+//   .then(response => {
+    
+//     console.log(response.data);
+//   })
+//   .catch(err => console.log(err));
+// }, [id]);

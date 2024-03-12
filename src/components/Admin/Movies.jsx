@@ -1,9 +1,39 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useState } from 'react'
 import './Movies.css'
-
+import axios from "axios";
 
 const Movies = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("video", selectedFile);
+
+      axios.post("http://localhost:3005/upload", formData).then((response) => {
+        console.log(response);
+      });
+      
+    }
+//     fetch('http://localhost:3005/upload', {
+//       method: 'post',
+//       body: formData,
+//   })
+//   .then((response) => response.json())
+//   .then((data) => {
+//       alert("record is saved")
+//   })
+//   .catch((err) => {
+//       console.log("error")
+//   })
+// }
+
+  };
   var [inputs, setInputs] = useState({
     "MovieId": '',
     "MovieName": '',
@@ -101,6 +131,10 @@ const saveData = () => {
       <input type="file" onChange={handleImage} ></input>
       <br /><br />
 
+      <label>Upload a Video</label><br/>
+      <input type="file" accept="video/*" onChange={handleFileChange} />
+      <button onClick={handleUpload}>Upload</button>
+      <br /><br />
       <Button onClick={saveData} variant='contained'>Submit</Button>
     </div>
   )

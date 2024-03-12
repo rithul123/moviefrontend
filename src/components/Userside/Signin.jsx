@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-
+import './Sigin.css';
 const Signin = () => {
  
   const [email, setEmail] = useState('');
@@ -19,7 +19,7 @@ const Signin = () => {
  // For a real application, you would typically make an API call to authenticate the user
  };
  return (
-<div>
+<div className='box'>
 <h2>Sign In</h2>
  <form onSubmit={handleSubmit}>
 <div>
@@ -49,7 +49,7 @@ const Signin = () => {
  </form>
  <div>
  <p>Registrations are closed now.</p>
- <p>Don’t have an account? <a href="/Register">Register</a></p>
+ <p>Don’t have an account? <a href="/reg">Register</a></p>
  </div>
  </div>
  );
