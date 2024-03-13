@@ -19,6 +19,19 @@ const Signin = () => {
  // For a real application, you would typically make an API call to authenticate the user
  };
  return (
+  <div
+  className='box'
+  style={{
+    backgroundImage: `url(' https://t4.ftcdn.net/jpg/02/86/32/15/240_F_286321594_HHLM1hCAuqrrqQ0Sv3SKF7uHhmrojMoq.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }}
+>
 <div className='box'>
 <h2>Sign In</h2>
  <form onSubmit={handleSubmit}>
@@ -50,6 +63,7 @@ const Signin = () => {
  <div>
  <p>Registrations are closed now.</p>
  <p>Don’t have an account? <a href="/reg">Register</a></p>
+ </div>
  </div>
  </div>
  );

@@ -1,13 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Box, CircularProgress, Container, Typography, AppBar, Toolbar, IconButton, Menu, MenuItem, Card, CardContent, Button } from '@mui/material';
-import { Menu as MenuIcon, Search as SearchIcon } from '@mui/icons-material';
+import { Box, Container, Typography, AppBar, Toolbar, Button, Card, CardContent } from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Buffer } from 'buffer';
 import './Xmain.css';
+
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -24,6 +25,7 @@ const Search = styled('div')(({ theme }) => ({
     width: 'auto',
   },
 }));
+
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -50,14 +52,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-
-const Moviedetails = () => {
+ 
+const Xmain = () => {
+  const navigate= useNavigate();
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     axios.get("http://localhost:3005/view")
@@ -83,44 +86,28 @@ const Moviedetails = () => {
     setSearchTerm(event.target.value);
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleMovieClick = (movieId) => {
-    console.log('Clicked on movie with ID:', movieId);
-    // Handle the click event, e.g., redirect to movie details page
+    // const selected = filteredMovies.find(movie => movie._id === movieId);
+    // console.log('Selected Movie:', selected);
+    // setSelectedMovie(selected);
+    console.log(movieId)
+    navigate(`/main/${movieId}`)
   };
+
+  const clearSelectedMovie = () => {
+    setSelectedMovie(null);
+  };
+
+  console.log('Filtered Movies:', filteredMovies);
 
   return (
     <Box style={{ backgroundImage: `url('https://wallpapercave.com/wp/nTwzv3B.jpg')`, backgroundSize: 'cover' }}>
       <AppBar position="static" sx={{ backgroundColor: 'black' }}>
         <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={handleClick}
-          >
-            / <MenuIcon />
-          </IconButton> */}
-          {/* <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem component={Link} to="/" onClick={handleClose}>Home</MenuItem>
-          </Menu> */}
-          <Typography         
-          variant="h6"
-             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-            component={Link} className='sy' to="/" onClick={handleClose}
+          <Typography
+            variant="h6"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            component={Link} className='sy' to="/" onClick={clearSelectedMovie}
           >
             STREAMSAVY
           </Typography>
@@ -142,56 +129,44 @@ const Moviedetails = () => {
         </Toolbar>
       </AppBar>
       <Container className='body'>
-        <Typography variant="h3" align="center" gutterBottom style={{ margin: '20px 0', color: 'white' }}>WORLD OF ENTERTAINMENT</Typography>
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
-          {filteredMovies.map((movie, index) => (
-            <Button
-              className='shrink-button'
-              key={index}
-              onClick={() => handleMovieClick(movie.id)}
-              style={{ textDecoration: 'none', color: 'black' }}
-            >
-              <Card style={{ margin: '20px', width: '300px', backgroundColor: 'black' }}>
-                <CardContent>
-                  {movie.image1 && (
-                    <img src={`data:image/jpeg;base64,${Buffer.from(movie.image1.data).toString('base64')}`} style={{ marginBottom: '20px', maxWidth: '100%' }} alt="Movie" />
-                  )}
-                 
-                    
-                  <Typography variant="subtitle1" gutterBottom style={{ color: 'white' }}><strong>{movie.MovieName}</strong></Typography>
-                </CardContent>
-              </Card>
-            </Button>
-          ))}
-        </div>
+        {selectedMovie ? (
+          <div>
+            <Typography variant="h4" align="center" gutterBottom style={{ margin: '20px 0', color: 'white' }}>{selectedMovie.MovieName}</Typography>
+            <Card style={{ margin: '20px', width: '300px', backgroundColor: 'black', color: 'white' }}>
+              <CardContent>
+                {selectedMovie.image1 && (
+                  <img src={`data:image/jpeg;base64,${Buffer.from(selectedMovie.image1.data).toString('base64')}`} style={{ marginBottom: '20px', maxWidth: '100%' }} alt="Movie" />
+                )}
+                <Typography variant="subtitle1" gutterBottom><strong>Genre:</strong> {selectedMovie.Genre}</Typography>
+                <Typography variant="subtitle1" gutterBottom><strong>Language:</strong> {selectedMovie.Language}</Typography>
+                <Typography variant="subtitle1" gutterBottom><strong>Description:</strong> {selectedMovie.Description}</Typography>
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+            {filteredMovies.map((movie, index) => (
+              <Button
+                className='shrink-button'
+                key={index}
+                onClick={() => handleMovieClick(movie._id)}
+                style={{ textDecoration: 'none', color: 'black' }}
+              >
+                <Card style={{ margin: '20px', width: '300px', backgroundColor: 'black' }}>
+                  <CardContent>
+                    {movie.image1 && (
+                      <img src={`data:image/jpeg;base64,${Buffer.from(movie.image1.data).toString('base64')}`} style={{ marginBottom: '20px', maxWidth: '100%' }} alt="Movie" />
+                    )}
+                    <Typography variant="subtitle1" gutterBottom style={{ color: 'white' }}><strong>{movie.MovieName}</strong></Typography>
+                  </CardContent>
+                </Card>
+              </Button>
+            ))}
+          </div>
+        )}
       </Container>
     </Box>
   );
 };
 
-export default Moviedetails;
-
-
-
-// const savedata=()=>{
- 
-//   console.log(inputs)
-//  axios.post("http://localhost:3002/booking",inputs) 
-//  .then((response) => {
-//   alert("Booked Successfully");
-// })
-// .catch(err => console.error("Error", err));
-// };
-
-
-
-
-// useEffect(() => {
-// console.log("id:", id);
-// axios.get(`http://localhost:3002/book/${id}`)
-//   .then(response => {
-    
-//     console.log(response.data);
-//   })
-//   .catch(err => console.log(err));
-// }, [id]);
+export default Xmain;

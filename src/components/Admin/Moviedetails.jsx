@@ -7,7 +7,7 @@ import { Buffer } from 'buffer';
 
 const Moviedetails = () => {
     const [selected, setSelected] = useState(null); // Initialize selected as null
-    const [update, setUpdate] = useState(false);
+    const [update, setUpdate] = useState(false);  
     const [movie, setMovie] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,6 +15,7 @@ const Moviedetails = () => {
     useEffect(() => {
         axios.get("http://localhost:3005/view")
             .then(response => {
+                console.log(response.data)
                 setMovie(response.data);
                 setLoading(false);
                 console.log("AAAAAAAAAAA:",response.data.image)

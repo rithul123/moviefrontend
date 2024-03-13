@@ -38,7 +38,7 @@ function App() {
       <Route path='/mode' element={<Moviedeails2 method='get'/>}></Route>
       <Route path='/Main2' element={<MovieDetailsPage method='post'/>}></Route>
       <Route path='/' element={<Homepage method='post'/>}></Route>
-      <Route path="/next" element={<Nextpage method='post'/>}></Route> 
+      <Route path="/main/:id" element={<Nextpage method='get'/>}></Route> 
       <Route path="/reg" element={<Register1 method='post'/>}></Route> 
     </Routes>
     </BrowserRouter>

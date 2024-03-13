@@ -54,7 +54,7 @@ const StyledInputBase = styled('input')({
 
 const slideImages = [
   {
-    url: 'https://i.pinimg.com/originals/07/69/66/07696639aecca04f5c07e3554972ac65.jpg',
+    url: 'https://cdn.shopify.com/s/files/1/0607/5056/1539/articles/netflix.jpg?v=1669877376',
     caption: 'Welcome to STREAMSAVY'
   },
   {
@@ -65,6 +65,16 @@ const slideImages = [
     url: 'https://user-images.githubusercontent.com/33485020/108069438-5ee79d80-7089-11eb-8264-08fdda7e0d11.jpg',
     caption: 'Welcome to STREAMSAVY'
   }
+  ,
+  {
+    url: 'https://img.helpnetsecurity.com/wp-content/uploads/2020/03/23143409/netflix-collection.jpg',
+    caption: 'Welcome to STREAMSAVY'
+  }
+  ,
+  {
+    url: 'https://cdn-images-1.medium.com/v2/resize:fit:1024/1*5lyavS59mazOFnb55Z6znQ.png',
+    caption: 'Welcome to STREAMSAVY'
+  },
 ];
 
 const divStyle = {
@@ -130,7 +140,7 @@ const Homepage = () => {
   return (
       
         <div  className="each-slide">
-          <Zoom duration={5000} delay={100}>
+          <Zoom duration={3000} delay={100}>
             {slideImages.map((image, index) => (
               <div key={index} className="each-slide">
                 <div style={{ ...divStyle, backgroundImage: `url(${image.url})` }}>
